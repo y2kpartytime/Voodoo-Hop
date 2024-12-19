@@ -13,7 +13,7 @@ public class MovableObs : MonoBehaviour
 
 	private bool isForward = true; //If the movement is out
 	private Vector3 startPos;
-	public GameObject player;
+	
    
     void Awake()
     {
@@ -72,21 +72,4 @@ public class MovableObs : MonoBehaviour
 			}
 		}
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.transform.parent = this.transform;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.transform.parent = null;
-        }
-    }
-
 }
