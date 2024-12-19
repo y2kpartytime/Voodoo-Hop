@@ -106,11 +106,12 @@ public class CharacterControls : MonoBehaviour {
 				{
 					rb.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
                     _playerAnim.SetFloat("Height", 5);
-
+                    _playerAnim.SetFloat("Speed", 0);
                 }
 			}
 			else
 			{
+                _playerAnim.SetFloat("Height", 0);
                 
                 if (!slide)
 				{
@@ -123,9 +124,10 @@ public class CharacterControls : MonoBehaviour {
 					rb.AddForce(velocityChange, ForceMode.VelocityChange);
 					if (velocity.y < -maxFallSpeed)
 						rb.velocity = new Vector3(velocity.x, -maxFallSpeed, velocity.z);
-				}
+                }
 				else if (Mathf.Abs(rb.velocity.magnitude) < speed * 1.0f)
 				{
+
 					rb.AddForce(moveDir * 0.15f, ForceMode.VelocityChange);
 				}
 			}
@@ -134,8 +136,9 @@ public class CharacterControls : MonoBehaviour {
 		{
 			rb.velocity = pushDir * pushForce;
 		}
-		// We apply gravity manually for more tuning control
-		rb.AddForce(new Vector3(0, -gravity * GetComponent<Rigidbody>().mass, 0));
+        // We apply gravity manually for more tuning control
+        
+        rb.AddForce(new Vector3(0, -gravity * GetComponent<Rigidbody>().mass, 0));
 	}
 
 	private void Update()
@@ -187,8 +190,8 @@ public class CharacterControls : MonoBehaviour {
 			wasStuned = true;
 		isStuned = true;
 		canMove = false;
-
-		float delta = 0;
+        _playerAnim.SetFloat("Height", 5);
+        float delta = 0;
 		delta = value / duration;
 
 		for (float t = 0; t < duration; t += Time.deltaTime)
@@ -211,6 +214,7 @@ public class CharacterControls : MonoBehaviour {
 		{
 			isStuned = false;
 			canMove = true;
-		}
+            _playerAnim.SetFloat("Height", 0);
+        }
 	}
 }
